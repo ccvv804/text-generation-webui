@@ -71,6 +71,7 @@ def load_model(model_name, loader=None):
         'AutoAWQ': AutoAWQ_loader,
         'QuIP#': QuipSharp_loader,
         'HQQ': HQQ_loader,
+        'BigDL-LLM': bigdl_llm_loader,
     }
 
     metadata = get_model_metadata(model_name)
@@ -319,6 +320,43 @@ def AutoAWQ_loader(model_name):
     )
 
     return model
+
+def bigdl_llm_loader(model_name):
+
+    from bigdl.llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+
+    path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
+
+    config = AutoConfig.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    if 'chatglm' in model_name.lower():
+        LoaderClass = AutoModel
+    else:
+        if config.to_dict().get('is_encoder_decoder', False):
+            LoaderClass = AutoModelForSeq2SeqLM
+            shared.is_seq2seq = True
+        else:
+            LoaderClass = AutoModelForCausalLM
+
+    model = LoaderClass.from_pretrained(
+                path_to_model,
+                load_in_4bit=shared.args.load_in_4bit,
+                load_in_low_bit=shared.args.load_in_low_bit,
+                optimize_model=shared.args.optimize_model,
+                #modules_to_not_convert=shared.args.modules_to_not_convert,
+                cpu_embedding=shared.args.cpu_embedding,
+                #lightweight_bmm=shared.args.lightweight_bmm,
+                trust_remote_code=shared.args.trust_remote_code,
+                use_cache=shared.args.use_cache,
+                )
+
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        model = model.to("xpu")
+
+    tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    return model, tokenizer
 
 
 def QuipSharp_loader(model_name):

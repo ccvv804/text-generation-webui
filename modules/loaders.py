@@ -149,6 +149,14 @@ loaders_and_params = OrderedDict({
         'hqq_backend',
         'trust_remote_code',
         'no_use_fast',
+    ],
+    'BigDL-LLM': [
+        'load_in_4bit',
+        'load_in_low_bit',
+        'optimize_model',
+        'cpu_embedding',
+        'trust_remote_code',
+        'use_cache',
     ]
 })
 
@@ -207,6 +215,7 @@ loaders_samplers = {
     'AutoAWQ': transformers_samplers(),
     'QuIP#': transformers_samplers(),
     'HQQ': transformers_samplers(),
+    'BigDL-LLM': transformers_samplers(),
     'ExLlamav2': {
         'temperature',
         'temperature_last',

@@ -111,7 +111,14 @@ def create_ui():
 
                         with gr.Column():
                             shared.gradio['load_in_8bit'] = gr.Checkbox(label="load-in-8bit", value=shared.args.load_in_8bit)
+                            shared.gradio['device'] = gr.Dropdown(label="device", choices=["CPU", "GPU"], value=shared.args.device)
                             shared.gradio['load_in_4bit'] = gr.Checkbox(label="load-in-4bit", value=shared.args.load_in_4bit)
+                            shared.gradio['load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
+                                                                           choices=["sym_int4", "asym_int4", "sym_int5", "asym_int5", "sym_int8", "nf3", "nf4", "fp4", "fp8", "fp8_e4m3", "fp8_e5m2", "fp16", "bf16"],
+                                                                           value=shared.args.load_in_low_bit,
+                                                                           info='Apply relevant low bit optimizations to the model.\n\nTo enable this option, start the web UI with the --load-in-low-bit flag.',
+                                                                           interactive=shared.args.load_in_4bit is False)
+
                             shared.gradio['use_double_quant'] = gr.Checkbox(label="use_double_quant", value=shared.args.use_double_quant)
                             shared.gradio['use_flash_attention_2'] = gr.Checkbox(label="use_flash_attention_2", value=shared.args.use_flash_attention_2, info='Set use_flash_attention_2=True while loading the model.')
                             shared.gradio['auto_devices'] = gr.Checkbox(label="auto-devices", value=shared.args.auto_devices)
@@ -129,6 +136,9 @@ def create_ui():
                             shared.gradio['mlock'] = gr.Checkbox(label="mlock", value=shared.args.mlock)
                             shared.gradio['numa'] = gr.Checkbox(label="numa", value=shared.args.numa, info='NUMA support can help on some systems with non-uniform memory access.')
                             shared.gradio['disk'] = gr.Checkbox(label="disk", value=shared.args.disk)
+                            shared.gradio['optimize_model'] = gr.Checkbox(label="optimize-model", value=shared.args.optimize_model, info="Enable this option to further optimize the low-bit llm model.")
+                            shared.gradio['cpu_embedding'] = gr.Checkbox(label="cpu-embedding", value=shared.args.cpu_embedding, info="Whether to replace the Embedding layer.")
+                            shared.gradio['use_cache'] = gr.Checkbox(label="use-cache", value=shared.args.use_cache, info="Wether to use past_key_values to speed up model decoding.")
                             shared.gradio['bf16'] = gr.Checkbox(label="bf16", value=shared.args.bf16)
                             shared.gradio['cache_8bit'] = gr.Checkbox(label="cache_8bit", value=shared.args.cache_8bit, info='Use 8-bit cache to save VRAM.')
                             shared.gradio['no_flash_attn'] = gr.Checkbox(label="no_flash_attn", value=shared.args.no_flash_attn, info='Force flash-attention to not be used.')
