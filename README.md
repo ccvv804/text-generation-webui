@@ -1,4 +1,4 @@
-# Text generation web UI for BigDL-llm loader
+# BigDL-llm loader Text generation web UI for intel Arc GPU
 1) Some features may not work.
 2) HF fp16 models only.
 3) Tested only on Windows. (If you are a Linux OS user, good luck!)
