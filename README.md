@@ -8,5 +8,5 @@
 3) Select D when asked.
 4) Once the installation ends, close text-generation-webui cmd.
 5) Run the `cmd_windows.bat`
-6) pip install --pre --no-deps bigdl-llm[xpu] bigdl-core-xe-21
+6) Type `pip install --pre --no-deps bigdl-llm[xpu] bigdl-core-xe-21`
 7) close cmd.
