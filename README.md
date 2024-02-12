@@ -16,4 +16,4 @@
 ## Update
 * 2024/02/12
   * add BigDL-llm GGUF loader.
-  * add q2_k support in BigDL-llm HF loader.
+  * add q2_k support in BigDL-llm HF loader. (?)
