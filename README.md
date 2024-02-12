@@ -16,4 +16,5 @@
 ## Update
 * 2024/02/12
   * add BigDL-llm GGUF loader.
+    * Q4_0, Q4_1, Q5_0, Q5_1, Q8_0 GGUF models only.
   * add q2_k support in BigDL-llm HF loader. (?)
