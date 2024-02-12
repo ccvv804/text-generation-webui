@@ -12,3 +12,8 @@
 5) Run the `cmd_windows.bat`
 6) Type `pip install --pre --no-deps bigdl-llm[xpu] bigdl-core-xe-21`
 7) close cmd.
+
+## Update
+* 2024/02/12
+  * add BigDL-llm GGUF loader.
+  * add q2_k support in BigDL-llm HF loader.
