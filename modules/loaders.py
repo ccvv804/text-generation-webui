@@ -157,6 +157,8 @@ loaders_and_params = OrderedDict({
         'cpu_embedding',
         'trust_remote_code',
         'use_cache',
+    ],
+    'BigDL-LLM-GGUF': [
     ]
 })
 
@@ -216,6 +218,7 @@ loaders_samplers = {
     'QuIP#': transformers_samplers(),
     'HQQ': transformers_samplers(),
     'BigDL-LLM': transformers_samplers(),
+    'BigDL-LLM-GGUF': transformers_samplers(),
     'ExLlamav2': {
         'temperature',
         'temperature_last',
