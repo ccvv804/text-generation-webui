@@ -72,6 +72,7 @@ def load_model(model_name, loader=None):
         'QuIP#': QuipSharp_loader,
         'HQQ': HQQ_loader,
         'BigDL-LLM': bigdl_llm_loader,
+        'BigDL-LLM-GGUF': bigdl_llm_gguf_loader,
     }
 
     metadata = get_model_metadata(model_name)
@@ -358,6 +359,29 @@ def bigdl_llm_loader(model_name):
 
     return model, tokenizer
 
+
+def bigdl_llm_gguf_loader(model_name):
+
+    from bigdl.llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+
+    path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
+
+    #config = AutoConfig.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    if 'chatglm' in model_name.lower():
+        LoaderClass = AutoModel
+    else:
+        LoaderClass = AutoModelForCausalLM
+
+    model, tokenizer = LoaderClass.from_gguf(
+                path_to_model,
+                )
+
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        model = model.to("xpu")
+
+    return model, tokenizer
 
 def QuipSharp_loader(model_name):
     try:
